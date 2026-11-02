@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Avunu LLC (avu.nu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <template
+        id="report_repairorder_vehicle"
+        inherit_id="repair.report_repairorder"
+    >
+        <xpath expr="//div[@id='informations']/div[1]" position="inside">
+            <p t-if="o.vehicle_id" class="m-0">
+                <strong>Vehicle:</strong>
+                <span t-field="o.vehicle_id">2020 Freightliner Cascadia</span>
+            </p>
+            <p t-if="o.vehicle_id.unit_number" class="m-0">
+                <strong>Unit:</strong>
+                <span t-field="o.vehicle_id.unit_number">T-104</span>
+            </p>
+            <p t-if="o.vehicle_vin" class="m-0">
+                <strong>VIN:</strong>
+                <span t-field="o.vehicle_vin">1FUJGLDR0LLL12345</span>
+            </p>
+            <p t-if="o.odometer_in" class="m-0">
+                <strong>Odometer:</strong>
+                <span t-field="o.odometer_in">123456</span>
+                <span t-field="o.vehicle_odometer_unit">mi</span>
+            </p>
+        </xpath>
+    </template>
+
+    <template
+        id="report_saleorder_document_vehicle"
+        inherit_id="sale.report_saleorder_document"
+    >
+        <xpath expr="//div[@id='informations']" position="inside">
+            <div t-if="doc.vehicle_id" class="col" name="informations_vehicle">
+                <strong>Vehicle</strong>
+                <div t-field="doc.vehicle_id">2020 Freightliner Cascadia</div>
+                <div t-if="doc.vehicle_id.unit_number">
+                    Unit: <span t-field="doc.vehicle_id.unit_number">T-104</span>
+                </div>
+                <div t-if="doc.vehicle_id.vin_sn">
+                    VIN: <span t-field="doc.vehicle_id.vin_sn">1FUJGLDR0LLL12345</span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template
+        id="report_invoice_document_vehicle"
+        inherit_id="account.report_invoice_document"
+    >
+        <xpath expr="//div[@name='invoice_date']" position="before">
+            <div t-if="o.vehicle_id" class="col" name="vehicle">
+                <strong>Vehicle</strong>
+                <div t-field="o.vehicle_id">2020 Freightliner Cascadia</div>
+                <div t-if="o.vehicle_id.unit_number">
+                    Unit: <span t-field="o.vehicle_id.unit_number">T-104</span>
+                </div>
+                <div t-if="o.vehicle_id.vin_sn">
+                    VIN: <span t-field="o.vehicle_id.vin_sn">1FUJGLDR0LLL12345</span>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_purchase_order_form_add_to_repair" model="ir.ui.view">
+        <field name="name">purchase.order.form.add.to.repair</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[last()]" position="after">
+                <button
+                    name="action_add_to_repair"
+                    string="Add to Repair"
+                    type="object"
+                    invisible="state not in ('purchase', 'done')"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_repair_order_list_select_for_po" model="ir.ui.view">
+        <field name="name">repair.order.list.select.for.po</field>
+        <field name="model">repair.order</field>
+        <field name="arch" type="xml">
+            <list string="Repair Orders" create="1" delete="0" import="0"
+                action="action_select_po_for_repair" type="object">
+                <field name="name" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="product_id" optional="show"/>
+                <field name="schedule_date" optional="show"/>
+                <field name="state" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_purchase_order_list_select_for_repair" model="ir.ui.view">
+        <field name="name">purchase.order.list.select.for.repair</field>
+        <field name="model">purchase.order</field>
+        <field name="arch" type="xml">
+            <list string="Purchase Orders" create="0" delete="0" import="0"
+                action="action_select_for_repair" type="object">
+                <header>
+                    <button name="action_add_selected_to_repair" type="object"
+                        string="Add to Order"/>
+                </header>
+                <field name="partner_ref" string="Vendor Reference" optional="show"/>
+                <field name="name" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="date_order" optional="show"/>
+                <field name="date_planned" optional="hide"/>
+                <field name="amount_total" sum="Total" optional="show"/>
+                <field name="state" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

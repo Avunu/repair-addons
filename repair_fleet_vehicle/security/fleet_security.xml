@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Avunu LLC (avu.nu)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
+<odoo>
+    <!-- Core fleet assumes a *company* fleet: staff drive company cars, so
+         "Officer: Manage all vehicles" (fleet.fleet_group_user) is in fact
+         restricted by fleet.fleet_rule_vehicle_visibility_user to vehicles
+         where driver_id is the user's own partner (plus hr_fleet's variant
+         keyed on driver_employee_id). Only Administrator gets an
+         unrestricted rule.
+
+         In a repair shop the vehicles are *customer* property, so no
+         technician is ever the driver and an Officer can read nothing.
+         That surfaces as a baffling "doesn't have 'read' access to Vehicle"
+         the moment anything reads a vehicle outside a many2one display:
+         Many2one.convert_to_read fetches display_name with sudo, so forms
+         look fine right up until server code touches the record.
+
+         Record rules of the same group are OR'ed, so these unrestricted
+         rules relax the core ones without editing them. The global
+         multi-company rules still apply, and ir.model.access still caps
+         Officers at read/write (no create/unlink) on the vehicle itself. -->
+    <record id="rule_fleet_vehicle_shop_user" model="ir.rule">
+        <field name="name">Shop: Officers see all vehicles</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle" />
+        <field name="groups" eval="[Command.link(ref('fleet.fleet_group_user'))]" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <!-- Same restriction, same reason: repair confirmation writes the intake
+         reading to the vehicle's odometer history. -->
+    <record id="rule_fleet_vehicle_odometer_shop_user" model="ir.rule">
+        <field name="name">Shop: Officers see all vehicle odometers</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_odometer" />
+        <field name="groups" eval="[Command.link(ref('fleet.fleet_group_user'))]" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <!-- Service history is read-only for Officers per ir.model.access; without
+         this they only see it for vehicles they personally drive. -->
+    <record id="rule_fleet_vehicle_log_services_shop_user" model="ir.rule">
+        <field name="name">Shop: Officers see all vehicle services</field>
+        <field name="model_id" ref="fleet.model_fleet_vehicle_log_services" />
+        <field name="groups" eval="[Command.link(ref('fleet.fleet_group_user'))]" />
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>

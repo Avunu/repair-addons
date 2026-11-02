@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_repair_order_form_purchase_order_parts" model="ir.ui.view">
+        <field name="name">repair.order.form.purchase.order.parts</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form"/>
+        <field name="arch" type="xml">
+            <button name="action_add_from_catalog_repair" position="after">
+                <button
+                    name="action_add_from_purchase_order_repair"
+                    string="Purchase Orders"
+                    type="object"
+                    class="px-4 btn-link"
+                    context="{'order_id': parent.id}"
+                />
+            </button>
+        </field>
+    </record>
+
+</odoo>

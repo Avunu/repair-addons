@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Avunu LLC (avu.nu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="fleet_vehicle_view_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.repair</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    name="action_view_repairs"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-wrench"
+                >
+                    <field
+                        name="repair_count"
+                        widget="statinfo"
+                        string="Repairs"
+                    />
+                </button>
+            </div>
+            <!-- Before, not after: shop_vehicle_vin hangs its Decode VIN
+                 button off the end of vin_sn, and this must not land between
+                 the two. -->
+            <field name="vin_sn" position="before">
+                <field name="unit_number" placeholder="e.g. T-104" />
+            </field>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_view_form_repairs_tab" model="ir.ui.view">
+        <field name="name">fleet.vehicle.form.repairs.tab</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+        <!-- Applied after the default priority (16) so the tab lands last,
+             after pages other modules append, such as shop_vehicle_vin's VIN
+             Specifications, which this module does not depend on. -->
+        <field name="priority">20</field>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="repairs" string="Repairs">
+                    <field name="repair_order_ids" readonly="1">
+                        <list default_order="schedule_date desc">
+                            <field name="name" />
+                            <field name="schedule_date" />
+                            <field name="partner_id" />
+                            <field name="state" widget="badge" />
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_view_tree" model="ir.ui.view">
+        <field name="name">fleet.vehicle.list.repair</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_tree" />
+        <field name="arch" type="xml">
+            <field name="license_plate" position="after">
+                <field name="unit_number" readonly="1" optional="show" />
+            </field>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_view_search" model="ir.ui.view">
+        <field name="name">fleet.vehicle.search.repair</field>
+        <field name="model">fleet.vehicle</field>
+        <field name="inherit_id" ref="fleet.fleet_vehicle_view_search" />
+        <field name="arch" type="xml">
+            <field name="license_plate" position="after">
+                <field name="unit_number" />
+            </field>
+        </field>
+    </record>
+</odoo>

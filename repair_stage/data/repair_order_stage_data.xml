@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Avunu LLC (avu.nu)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
+<odoo noupdate="1">
+    <record id="stage_new" model="repair.order.stage">
+        <field name="name">New</field>
+        <field name="sequence">10</field>
+        <field name="state">draft</field>
+    </record>
+    <record id="stage_confirmed" model="repair.order.stage">
+        <field name="name">Confirmed</field>
+        <field name="sequence">20</field>
+        <field name="state">confirmed</field>
+    </record>
+    <record id="stage_waiting_customer" model="repair.order.stage">
+        <field name="name">Waiting for Customer</field>
+        <field name="sequence">30</field>
+        <field name="state">confirmed</field>
+    </record>
+    <record id="stage_waiting_parts" model="repair.order.stage">
+        <field name="name">Waiting for Parts</field>
+        <field name="sequence">40</field>
+        <field name="state">confirmed</field>
+    </record>
+    <record id="stage_under_repair" model="repair.order.stage">
+        <field name="name">Under Repair</field>
+        <field name="sequence">50</field>
+        <field name="state">under_repair</field>
+    </record>
+    <record id="stage_repaired" model="repair.order.stage">
+        <field name="name">Repaired</field>
+        <field name="sequence">60</field>
+        <field name="state">done</field>
+    </record>
+    <record id="stage_cancelled" model="repair.order.stage">
+        <field name="name">Cancelled</field>
+        <field name="sequence">70</field>
+        <field name="state">cancel</field>
+        <field name="fold" eval="True" />
+    </record>
+</odoo>

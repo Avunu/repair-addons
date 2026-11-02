@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Avunu LLC (avu.nu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <!-- Upstream repair_service uses "repair_id.state" in this line-level
+         modifier, which crashes when service lines exist on an unsaved
+         repair order (repair_id is False) - exactly what applying a template
+         with service lines produces. "parent.state" is the supported form. -->
+    <record id="view_repair_order_form_inherit" model="ir.ui.view">
+        <field name="name">repair.order.form.services.parent.state</field>
+        <field name="model">repair.order</field>
+        <field
+            name="inherit_id"
+            ref="repair_service.view_repair_order_form_inherit"
+        />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='repair_service_ids']//field[@name='display_name']"
+                position="attributes"
+            >
+                <attribute name="readonly">parent.state in ('cancel', 'done')</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

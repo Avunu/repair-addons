@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Avunu LLC (avu.nu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_partner_form_vehicles_tab" model="ir.ui.view">
+        <field name="name">res.partner.form.vehicles.tab</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='contact_addresses']" position="after">
+                <page name="vehicles" string="Vehicles">
+                    <field name="vehicle_ids" mode="list" context="{'default_owner_id': id}">
+                        <list>
+                            <field name="model_year" />
+                            <field name="color" />
+                            <field name="model_id" />
+                            <field name="unit_number" />
+                            <field name="vin_sn" />
+                            <field name="license_plate" />
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

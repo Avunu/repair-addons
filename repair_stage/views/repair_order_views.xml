@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Avunu LLC (avu.nu)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
+     The `state` nodes are hidden rather than replaced: other modules anchor
+     their own view changes on them. -->
+<odoo>
+    <record id="view_repair_order_form" model="ir.ui.view">
+        <field name="name">repair.order.form (in repair_stage)</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header/field[@name='state']" position="after">
+                <field
+                    name="stage_id"
+                    widget="statusbar"
+                    options="{'clickable': '1', 'fold_field': 'fold'}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_repair_order_tree" model="ir.ui.view">
+        <field name="name">repair.order.list (in repair_stage)</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+            <field name="state" position="before">
+                <field
+                    name="stage_id"
+                    optional="show"
+                    widget="badge"
+                    decoration-muted="state == 'draft'"
+                    decoration-info="state == 'confirmed'"
+                    decoration-warning="state == 'under_repair'"
+                    decoration-success="state == 'done'"
+                    decoration-danger="state == 'cancel'"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_repair_kanban" model="ir.ui.view">
+        <field name="name">repair.kanban (in repair_stage)</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_kanban" />
+        <field name="arch" type="xml">
+            <kanban position="attributes">
+                <attribute name="default_group_by">stage_id</attribute>
+                <attribute name="js_class">repair_stage_kanban</attribute>
+            </kanban>
+            <field name="state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <!-- Stage name, coloured by its status the way core colours the
+                 status badge. -->
+            <field name="state" position="after">
+                <div class="col-6 text-end mb-1">
+                    <field
+                        name="stage_id"
+                        widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-primary="state == 'confirmed'"
+                        decoration-secondary="state == 'under_repair'"
+                        decoration-success="state == 'done'"
+                        decoration-danger="state == 'cancel'"
+                    />
+                </div>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_repair_order_form_filter" model="ir.ui.view">
+        <field name="name">repair.order.search (in repair_stage)</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form_filter" />
+        <field name="arch" type="xml">
+            <field name="sale_order_id" position="after">
+                <field name="stage_id" />
+            </field>
+            <filter name="status" position="before">
+                <filter string="Stage" name="stage" context="{'group_by': 'stage_id'}" />
+            </filter>
+        </field>
+    </record>
+</odoo>

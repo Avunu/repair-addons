@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Avunu LLC (avu.nu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_repair_order_form" model="ir.ui.view">
+        <field name="name">repair.order.form.vehicle</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//field[@name='partner_id']" position="after">
+                <label for="vehicle_id" />
+                <div class="o_row">
+                    <field
+                        name="vehicle_id"
+                        readonly="state in ['cancel', 'done']"
+                        domain="[] if show_all_vehicles or not partner_id else ['|', ('owner_id', '=', partner_id), ('driver_id', '=', partner_id)]"
+                        context="{'default_owner_id': partner_id}"
+                    />
+                    <field
+                        name="show_all_vehicles"
+                        invisible="not partner_id or state in ['cancel', 'done']"
+                    />
+                </div>
+                <field
+                    name="vehicle_vin"
+                    invisible="not vehicle_id"
+                />
+                <label for="odometer_in" invisible="not vehicle_id" />
+                <div class="o_row" invisible="not vehicle_id">
+                    <field name="odometer_in" readonly="state in ['cancel', 'done']" />
+                    <field name="vehicle_odometer_unit" readonly="1" />
+                </div>
+            </xpath>
+            <!--
+                The vehicle is the subject of the repair, not a stockable
+                product, so core's "Product to repair" block is hidden. The
+                fields stay in the view (invisible, not removed) because other
+                repair modules and sibling modifiers still read product_id,
+                tracking and product_uom.
+            -->
+            <xpath
+                expr="//field[@name='partner_id']/following-sibling::field[@name='product_id']"
+                position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='partner_id']/following-sibling::field[@name='lot_id']"
+                position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='product_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath
+                expr="//div[hasclass('o_row')][field[@name='product_qty']]"
+                position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='parts']" position="before">
+                <page string="Customer Concern" name="customer_concern">
+                    <field
+                        name="customer_concern"
+                        placeholder="Describe the issue as reported by the customer."
+                    />
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_repair_order_tree" model="ir.ui.view">
+        <field name="name">repair.order.list.vehicle</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_tree" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="vehicle_id" optional="show" />
+                <field name="vehicle_license_plate" optional="hide" />
+            </field>
+            <!-- Always blank in a vehicle shop; keep it out of the way. -->
+            <field name="product_id" position="attributes">
+                <attribute name="optional">hide</attribute>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_repair_order_form_filter" model="ir.ui.view">
+        <field name="name">repair.order.search.vehicle</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form_filter" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="vehicle_id" />
+                <field
+                    name="vehicle_license_plate"
+                    string="Plate / VIN"
+                    filter_domain="['|', ('vehicle_license_plate', 'ilike', self), ('vehicle_vin', 'ilike', self)]"
+                />
+            </field>
+            <filter name="partner" position="after">
+                <filter
+                    string="Vehicle"
+                    name="vehicle"
+                    domain="[]"
+                    context="{'group_by': 'vehicle_id'}"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>
