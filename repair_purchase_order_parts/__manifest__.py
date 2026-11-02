@@ -9,7 +9,7 @@
     "version": "18.0.2.0.0",
     "category": "Inventory/Repair",
     "author": "Avunu LLC",
-    "website": "https://avu.nu",
+    "website": "https://github.com/Avunu/repair-addons",
     "license": "AGPL-3",
     "installable": True,
     "depends": [

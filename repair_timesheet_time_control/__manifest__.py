@@ -7,7 +7,7 @@
     "version": "18.0.1.0.0",
     "category": "Inventory/Repair",
     "author": "Avunu LLC",
-    "website": "https://avu.nu",
+    "website": "https://github.com/Avunu/repair-addons",
     "license": "AGPL-3",
     # repair_timesheet carries account.analytic.line.repair_order_id, which is
     # the back-link the time control mixin needs; project_timesheet_time_control
