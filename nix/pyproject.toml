@@ -17,12 +17,12 @@ dependencies = [
     # >>> odoo-nix: install set (managed from modules.txt) >>>
     "odoo",
     "packaging",
-    "odoo-addon-fleet_vehicle_ownership",
-    "odoo-addon-repair_order_template",
-    "odoo-addon-repair_service",
-    "odoo-addon-repair_timesheet",
-    "odoo-addon-project_timesheet_time_control",
-    "odoo-addon-base_repair_config",
+    "odoo-addon-repair_fleet_vehicle",
+    "odoo-addon-repair_order_template_service",
+    "odoo-addon-repair_purchase_order_parts",
+    "odoo-addon-repair_service_so_sync",
+    "odoo-addon-repair_stage",
+    "odoo-addon-repair_timesheet_time_control",
     # <<< odoo-nix: install set <<<
 ]
 
@@ -31,7 +31,6 @@ dependencies = [
 # relock leaves this block alone.
 dev = [
     "debugpy",
-    "ruff",
     # Odoo's --dev=reload watcher needs a filesystem watcher it does not declare.
     "watchdog",
     # Odoo's test runner imports freezegun, and browser tours need
@@ -140,18 +139,24 @@ constraint-dependencies = ["setuptools<81"]
     "odoo-addon-project_version" = { path = "../.odoo-nix/modules/project/project_version" }
     "odoo-addon-repair_analytic" = { path = "../.odoo-nix/modules/repair/repair_analytic" }
     "odoo-addon-repair_analytic_timesheet" = { path = "../.odoo-nix/modules/repair/repair_analytic_timesheet" }
+    "odoo-addon-repair_fleet_vehicle" = { path = "../repair_fleet_vehicle", editable = true }
     "odoo-addon-repair_order_group" = { path = "../.odoo-nix/modules/repair/repair_order_group" }
     "odoo-addon-repair_order_group_services" = { path = "../.odoo-nix/modules/repair/repair_order_group_services" }
     "odoo-addon-repair_order_line_sequence" = { path = "../.odoo-nix/modules/repair/repair_order_line_sequence" }
     "odoo-addon-repair_order_product_by_lot" = { path = "../.odoo-nix/modules/repair/repair_order_product_by_lot" }
     "odoo-addon-repair_order_template" = { path = "../.odoo-nix/modules/repair/repair_order_template" }
+    "odoo-addon-repair_order_template_service" = { path = "../repair_order_template_service", editable = true }
     "odoo-addon-repair_picking_after_done" = { path = "../.odoo-nix/modules/repair/repair_picking_after_done" }
+    "odoo-addon-repair_purchase_order_parts" = { path = "../repair_purchase_order_parts", editable = true }
     "odoo-addon-repair_quality_control" = { path = "../.odoo-nix/modules/repair/repair_quality_control" }
     "odoo-addon-repair_refurbish" = { path = "../.odoo-nix/modules/repair/repair_refurbish" }
     "odoo-addon-repair_scheduled_date_calendar_view" = { path = "../.odoo-nix/modules/repair/repair_scheduled_date_calendar_view" }
     "odoo-addon-repair_service" = { path = "../.odoo-nix/modules/repair/repair_service" }
+    "odoo-addon-repair_service_so_sync" = { path = "../repair_service_so_sync", editable = true }
+    "odoo-addon-repair_stage" = { path = "../repair_stage", editable = true }
     "odoo-addon-repair_stock" = { path = "../.odoo-nix/modules/repair/repair_stock" }
     "odoo-addon-repair_timesheet" = { path = "../.odoo-nix/modules/repair/repair_timesheet" }
+    "odoo-addon-repair_timesheet_time_control" = { path = "../repair_timesheet_time_control", editable = true }
     "odoo-addon-repair_type" = { path = "../.odoo-nix/modules/repair/repair_type" }
     "odoo-addon-repair_type_product_destination" = { path = "../.odoo-nix/modules/repair/repair_type_product_destination" }
     "odoo-addon-sale_project_copy_tasks" = { path = "../.odoo-nix/modules/project/sale_project_copy_tasks" }
@@ -175,14 +180,15 @@ packages = []
 # >>> odoo-nix: sdist build deps (managed) >>>
 "docopt" = ["setuptools"]
 "odoo" = ["setuptools"]
-"odoo-addon-base-repair-config" = ["setuptools"]
-"odoo-addon-fleet-vehicle-ownership" = ["setuptools"]
-"odoo-addon-project-timesheet-time-control" = ["setuptools"]
-"odoo-addon-repair-order-template" = ["setuptools"]
-"odoo-addon-repair-service" = ["setuptools"]
-"odoo-addon-repair-timesheet" = ["setuptools"]
 "ofxparse" = ["setuptools"]
 "python-ldap" = ["setuptools"]
 "rjsmin" = ["setuptools"]
 "vobject" = ["setuptools"]
 # <<< odoo-nix: sdist build deps (managed) <<<
+
+[tool.odoo-nix]
+schema = 1
+profile = "github:Avunu/odoo-standards-profile/v1"
+
+[tool.odoo-nix.icons]
+src-icon = "assets/icons/repair-addons.png"
