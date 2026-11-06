@@ -1702,7 +1702,7 @@ wheels = [
 
 [[package]]
 name = "odoo-addon-repair-fleet-vehicle"
-version = "18.0.1.1.1.3"
+version = "18.0.1.1.1.4"
 source = { editable = "../repair_fleet_vehicle" }
 dependencies = [
     { name = "odoo" },
@@ -1728,7 +1728,7 @@ wheels = [
 
 [[package]]
 name = "odoo-addon-repair-order-template-service"
-version = "18.0.1.0.0.3"
+version = "18.0.1.0.0.4"
 source = { editable = "../repair_order_template_service" }
 dependencies = [
     { name = "odoo" },
@@ -1745,7 +1745,7 @@ requires-dist = [
 
 [[package]]
 name = "odoo-addon-repair-purchase-order-parts"
-version = "18.0.2.0.0.3"
+version = "18.0.2.0.0.4"
 source = { editable = "../repair_purchase_order_parts" }
 dependencies = [
     { name = "odoo" },
@@ -1767,7 +1767,7 @@ wheels = [
 
 [[package]]
 name = "odoo-addon-repair-service-so-sync"
-version = "18.0.1.0.0.3"
+version = "18.0.1.0.0.4"
 source = { editable = "../repair_service_so_sync" }
 dependencies = [
     { name = "odoo" },
@@ -1782,7 +1782,7 @@ requires-dist = [
 
 [[package]]
 name = "odoo-addon-repair-stage"
-version = "18.0.1.0.0.3"
+version = "18.0.1.0.0.4"
 source = { editable = "../repair_stage" }
 dependencies = [
     { name = "odoo" },
@@ -1804,7 +1804,7 @@ wheels = [
 
 [[package]]
 name = "odoo-addon-repair-timesheet-time-control"
-version = "18.0.1.0.0.3"
+version = "18.0.1.0.0.4"
 source = { editable = "../repair_timesheet_time_control" }
 dependencies = [
     { name = "odoo" },
