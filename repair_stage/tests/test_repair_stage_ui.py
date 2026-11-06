@@ -4,6 +4,7 @@
 from unittest.mock import patch
 
 from odoo.tests import HttpCase, new_test_user, tagged
+from odoo.tools import mute_logger
 
 
 @tagged("post_install", "-at_install")
@@ -30,7 +31,12 @@ class TestRepairStageBoard(HttpCase):
             "views": [[False, "form"]],
             "target": "new",
         }
-        with patch.object(type(Repair), "action_validate", lambda self: dict(dialog)):
+        # The tour's "skipping a step" drop is refused with a UserError on purpose,
+        # and odoo.http logs that as a warning. The tour still asserts the dialog.
+        with (
+            patch.object(type(Repair), "action_validate", lambda self: dict(dialog)),
+            mute_logger("odoo.http"),
+        ):
             self.start_tour("/odoo", "repair_stage_board", login="stage_tour_user")
 
         self.assertEqual(alpha.state, "under_repair")

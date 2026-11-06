@@ -50,9 +50,9 @@ class RepairService(models.Model):
         # Mirror parts behavior (_clean_repair_sale_order_line): zero the
         # quantity instead of deleting, so confirmed orders keep their audit
         # trail.
-        self.sale_line_id.filtered(
-            lambda line: line.order_id.state != "cancel"
-        ).write({"product_uom_qty": 0.0})
+        self.sale_line_id.filtered(lambda line: line.order_id.state != "cancel").write(
+            {"product_uom_qty": 0.0}
+        )
         return super().unlink()
 
     def _update_repair_sale_order_line(self, vals):

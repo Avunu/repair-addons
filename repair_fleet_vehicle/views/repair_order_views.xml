@@ -23,10 +23,7 @@
                         invisible="not partner_id or state in ['cancel', 'done']"
                     />
                 </div>
-                <field
-                    name="vehicle_vin"
-                    invisible="not vehicle_id"
-                />
+                <field name="vehicle_vin" invisible="not vehicle_id" />
                 <label for="odometer_in" invisible="not vehicle_id" />
                 <div class="o_row" invisible="not vehicle_id">
                     <field name="odometer_in" readonly="state in ['cancel', 'done']" />

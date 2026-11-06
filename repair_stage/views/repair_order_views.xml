@@ -85,7 +85,11 @@
                 <field name="stage_id" />
             </field>
             <filter name="status" position="before">
-                <filter string="Stage" name="stage" context="{'group_by': 'stage_id'}" />
+                <filter
+                    string="Stage"
+                    name="stage"
+                    context="{'group_by': 'stage_id'}"
+                />
             </filter>
         </field>
     </record>

@@ -4,10 +4,7 @@
     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-    <template
-        id="report_repairorder_vehicle"
-        inherit_id="repair.report_repairorder"
-    >
+    <template id="report_repairorder_vehicle" inherit_id="repair.report_repairorder">
         <xpath expr="//div[@id='informations']/div[1]" position="inside">
             <p t-if="o.vehicle_id" class="m-0">
                 <strong>Vehicle:</strong>

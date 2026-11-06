@@ -11,16 +11,15 @@
     <record id="view_repair_order_form_inherit" model="ir.ui.view">
         <field name="name">repair.order.form.services.parent.state</field>
         <field name="model">repair.order</field>
-        <field
-            name="inherit_id"
-            ref="repair_service.view_repair_order_form_inherit"
-        />
+        <field name="inherit_id" ref="repair_service.view_repair_order_form_inherit" />
         <field name="arch" type="xml">
             <xpath
                 expr="//field[@name='repair_service_ids']//field[@name='display_name']"
                 position="attributes"
             >
-                <attribute name="readonly">parent.state in ('cancel', 'done')</attribute>
+                <attribute
+                    name="readonly"
+                >parent.state in ('cancel', 'done')</attribute>
             </xpath>
         </field>
     </record>

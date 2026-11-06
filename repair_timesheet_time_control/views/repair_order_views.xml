@@ -5,9 +5,7 @@
     <!-- Inherits repair_timesheet's view rather than the base repair form so
          the Timesheets tab is guaranteed to be there to hang buttons on. -->
     <record id="view_repair_order_form" model="ir.ui.view">
-        <field
-            name="name"
-        >repair.order.form (in repair_timesheet_time_control)</field>
+        <field name="name">repair.order.form (in repair_timesheet_time_control)</field>
         <field name="model">repair.order</field>
         <field
             name="inherit_id"

@@ -39,9 +39,7 @@ class RepairOrder(models.Model):
         """
         self.ensure_one()
         if self.state in ("done", "cancel"):
-            raise UserError(
-                _("Parts can't be added to a %s repair order.", self.state)
-            )
+            raise UserError(_("Parts can't be added to a %s repair order.", self.state))
         return {
             "type": "ir.actions.act_window",
             "name": _("Select a Purchase Order"),
