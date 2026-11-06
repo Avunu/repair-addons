@@ -1,7 +1,7 @@
 // Copyright 2026 Avunu LLC (avu.nu)
 // License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-import { registry } from "@web/core/registry";
+import {registry} from "@web/core/registry";
 
 const column = (title) => `.o_kanban_group:has(.o_column_title:contains('${title}'))`;
 const card = (name) => `.o_kanban_record:contains('${name}')`;

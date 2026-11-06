@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_repair_order_form_purchase_order_parts" model="ir.ui.view">
         <field name="name">repair.order.form.purchase.order.parts</field>
         <field name="model">repair.order</field>
-        <field name="inherit_id" ref="repair.view_repair_order_form"/>
+        <field name="inherit_id" ref="repair.view_repair_order_form" />
         <field name="arch" type="xml">
             <button name="action_add_from_catalog_repair" position="after">
                 <button
@@ -17,5 +16,4 @@
             </button>
         </field>
     </record>
-
 </odoo>

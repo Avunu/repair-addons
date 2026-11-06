@@ -11,7 +11,11 @@
         <field name="arch" type="xml">
             <xpath expr="//page[@name='contact_addresses']" position="after">
                 <page name="vehicles" string="Vehicles">
-                    <field name="vehicle_ids" mode="list" context="{'default_owner_id': id}">
+                    <field
+                        name="vehicle_ids"
+                        mode="list"
+                        context="{'default_owner_id': id}"
+                    >
                         <list>
                             <field name="model_year" />
                             <field name="color" />

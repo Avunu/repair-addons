@@ -16,11 +16,7 @@
                     class="oe_stat_button"
                     icon="fa-wrench"
                 >
-                    <field
-                        name="repair_count"
-                        widget="statinfo"
-                        string="Repairs"
-                    />
+                    <field name="repair_count" widget="statinfo" string="Repairs" />
                 </button>
             </div>
             <!-- Before, not after: shop_vehicle_vin hangs its Decode VIN

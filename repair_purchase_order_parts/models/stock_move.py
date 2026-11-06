@@ -13,7 +13,5 @@ class StockMove(models.Model):
         control-row button's `self` is an empty stock.move recordset, so
         the parent repair order is resolved from context instead.
         """
-        repair_order = self.env["repair.order"].browse(
-            self.env.context.get("order_id")
-        )
+        repair_order = self.env["repair.order"].browse(self.env.context.get("order_id"))
         return repair_order.action_add_parts_from_purchase_order()

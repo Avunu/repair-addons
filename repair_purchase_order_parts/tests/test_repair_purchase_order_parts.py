@@ -91,7 +91,7 @@ class TestRepairPurchaseOrderParts(TransactionCase):
         self.assertEqual(
             rotor_move.created_purchase_line_ids,
             self.purchase_order.order_line.filtered(
-                lambda l: l.product_id == self.part_b
+                lambda line: line.product_id == self.part_b
             ),
         )
 
@@ -153,6 +153,4 @@ class TestRepairPurchaseOrderParts(TransactionCase):
         self.assertEqual(self.repair.purchase_count, 1)
         self.assertIn(self.purchase_order, self.repair._get_linked_purchase_orders())
         self.assertEqual(self.purchase_order.repair_count, 1)
-        self.assertIn(
-            self.repair, self.purchase_order._get_linked_repair_orders()
-        )
+        self.assertIn(self.repair, self.purchase_order._get_linked_repair_orders())

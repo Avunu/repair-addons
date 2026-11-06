@@ -29,12 +29,10 @@ class RepairOrder(models.Model):
     )
     vehicle_odometer_unit = fields.Selection(related="vehicle_id.odometer_unit")
     odometer_in = fields.Float(
-        string="Odometer In",
         help="Odometer reading when the vehicle arrived at the shop. "
         "Logged to the vehicle's odometer history when the repair is confirmed.",
     )
     customer_concern = fields.Html(
-        string="Customer Concern",
         help="The issue as reported by the customer.",
     )
 

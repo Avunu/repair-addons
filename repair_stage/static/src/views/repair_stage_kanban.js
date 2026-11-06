@@ -1,9 +1,9 @@
 // Copyright 2026 Avunu LLC (avu.nu)
 // License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-import { registry } from "@web/core/registry";
-import { RelationalModel } from "@web/model/relational_model/relational_model";
-import { kanbanView } from "@web/views/kanban/kanban_view";
+import {RelationalModel} from "@web/model/relational_model/relational_model";
+import {kanbanView} from "@web/views/kanban/kanban_view";
+import {registry} from "@web/core/registry";
 
 /**
  * Dropping a repair card on another stage column runs the status change that
@@ -27,7 +27,7 @@ export class RepairStageKanbanDynamicGroupList extends RelationalModel.DynamicGr
         const record = sourceGroup.list.records.find((r) => r.id === dataRecordId);
         const reload = () => this.model.load();
         try {
-            // onClose also runs straight away when the step needs no dialog.
+            // OnClose also runs straight away when the step needs no dialog.
             await this.model.action.doActionButton({
                 type: "object",
                 name: "action_set_stage",
