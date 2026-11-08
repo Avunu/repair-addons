@@ -1,0 +1,129 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "include-component-in-tag": true,
+  "include-v-in-tag": false,
+  "tag-separator": ".",
+  "separate-pull-requests": false,
+  "group-pull-request-title-pattern": "chore(release): release ${branch}",
+  "pull-request-header": "Merging this releases the addons below on 18.0: release-please tags each `<addon>-18.0.x.y.z` and publishes its GitHub release, which carries the addon's zip and wheel.",
+  "changelog-sections": [
+    {
+      "type": "feat",
+      "section": "Features"
+    },
+    {
+      "type": "fix",
+      "section": "Bug Fixes"
+    },
+    {
+      "type": "perf",
+      "section": "Performance Improvements"
+    },
+    {
+      "type": "revert",
+      "section": "Reverts"
+    },
+    {
+      "type": "deps",
+      "section": "Dependencies"
+    },
+    {
+      "type": "docs",
+      "section": "Documentation",
+      "hidden": true
+    },
+    {
+      "type": "style",
+      "section": "Styles",
+      "hidden": true
+    },
+    {
+      "type": "chore",
+      "section": "Miscellaneous Chores",
+      "hidden": true
+    },
+    {
+      "type": "refactor",
+      "section": "Code Refactoring",
+      "hidden": true
+    },
+    {
+      "type": "test",
+      "section": "Tests",
+      "hidden": true
+    },
+    {
+      "type": "build",
+      "section": "Build System",
+      "hidden": true
+    },
+    {
+      "type": "ci",
+      "section": "Continuous Integration",
+      "hidden": true
+    }
+  ],
+  "packages": {
+    "repair_fleet_vehicle": {
+      "component": "repair_fleet_vehicle-18.0",
+      "exclude-paths": [
+        "repair_fleet_vehicle/tests",
+        "repair_fleet_vehicle/readme",
+        "repair_fleet_vehicle/i18n",
+        "repair_fleet_vehicle/i18n_extra",
+        "repair_fleet_vehicle/static/description"
+      ]
+    },
+    "repair_order_template_service": {
+      "component": "repair_order_template_service-18.0",
+      "exclude-paths": [
+        "repair_order_template_service/tests",
+        "repair_order_template_service/readme",
+        "repair_order_template_service/i18n",
+        "repair_order_template_service/i18n_extra",
+        "repair_order_template_service/static/description"
+      ]
+    },
+    "repair_purchase_order_parts": {
+      "component": "repair_purchase_order_parts-18.0",
+      "exclude-paths": [
+        "repair_purchase_order_parts/tests",
+        "repair_purchase_order_parts/readme",
+        "repair_purchase_order_parts/i18n",
+        "repair_purchase_order_parts/i18n_extra",
+        "repair_purchase_order_parts/static/description"
+      ]
+    },
+    "repair_service_so_sync": {
+      "component": "repair_service_so_sync-18.0",
+      "exclude-paths": [
+        "repair_service_so_sync/tests",
+        "repair_service_so_sync/readme",
+        "repair_service_so_sync/i18n",
+        "repair_service_so_sync/i18n_extra",
+        "repair_service_so_sync/static/description"
+      ]
+    },
+    "repair_stage": {
+      "component": "repair_stage-18.0",
+      "exclude-paths": [
+        "repair_stage/tests",
+        "repair_stage/readme",
+        "repair_stage/i18n",
+        "repair_stage/i18n_extra",
+        "repair_stage/static/description"
+      ]
+    },
+    "repair_timesheet_time_control": {
+      "component": "repair_timesheet_time_control-18.0",
+      "exclude-paths": [
+        "repair_timesheet_time_control/tests",
+        "repair_timesheet_time_control/readme",
+        "repair_timesheet_time_control/i18n",
+        "repair_timesheet_time_control/i18n_extra",
+        "repair_timesheet_time_control/static/description"
+      ]
+    }
+  }
+}
