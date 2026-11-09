@@ -166,4 +166,3 @@ class TestRepairFleetVehicle(TransactionCase):
         # Existing matches keep working.
         found = self.env["fleet.vehicle"].name_search("TRK-1234")
         self.assertIn(self.vehicle.id, [vehicle_id for vehicle_id, _name in found])
-
