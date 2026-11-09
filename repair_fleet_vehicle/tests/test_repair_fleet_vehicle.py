@@ -158,3 +158,12 @@ class TestRepairFleetVehicle(TransactionCase):
         self.assertEqual(
             self.vehicle.with_context(show_vehicle_year=True).display_name, plain
         )
+
+    def test_name_search_matches_unit_number(self):
+        self.vehicle.unit_number = "T-104"
+        found = self.env["fleet.vehicle"].name_search("T-104")
+        self.assertIn(self.vehicle.id, [vehicle_id for vehicle_id, _name in found])
+        # Existing matches keep working.
+        found = self.env["fleet.vehicle"].name_search("TRK-1234")
+        self.assertIn(self.vehicle.id, [vehicle_id for vehicle_id, _name in found])
+
