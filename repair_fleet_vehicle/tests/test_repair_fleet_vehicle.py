@@ -135,3 +135,15 @@ class TestRepairFleetVehicle(TransactionCase):
             .with_user(officer)
             .search([("vehicle_id", "=", self.vehicle.id)])
         )
+
+    def test_display_name_year_only_when_requested(self):
+        self.vehicle.model_year = "2016"
+        plain = self.vehicle.display_name
+        self.assertFalse(plain.startswith("2016"))
+        with_year = self.vehicle.with_context(show_vehicle_year=True).display_name
+        self.assertEqual(with_year, f"2016 {plain}")
+        # No year recorded: fall back to the plain label.
+        self.vehicle.model_year = False
+        self.assertEqual(
+            self.vehicle.with_context(show_vehicle_year=True).display_name, plain
+        )

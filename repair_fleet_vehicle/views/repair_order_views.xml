@@ -16,7 +16,7 @@
                         name="vehicle_id"
                         readonly="state in ['cancel', 'done']"
                         domain="[] if show_all_vehicles or not partner_id else ['|', ('owner_id', '=', partner_id), ('driver_id', '=', partner_id)]"
-                        context="{'default_owner_id': partner_id}"
+                        context="{'default_owner_id': partner_id, 'show_vehicle_year': True}"
                     />
                     <field
                         name="show_all_vehicles"

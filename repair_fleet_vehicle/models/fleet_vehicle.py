@@ -1,7 +1,7 @@
 # Copyright 2026 Avunu LLC (avu.nu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class FleetVehicle(models.Model):
@@ -17,6 +17,22 @@ class FleetVehicle(models.Model):
         help="The customer's own fleet number for this vehicle, as painted "
         "on the truck or used on their work orders (e.g. T-104).",
     )
+
+    @api.depends_context("show_vehicle_year")
+    @api.depends("model_year")
+    def _compute_display_name(self):
+        """Prefix the model year when a form asks for it via context.
+
+        Only the label changes (``name`` is a stored compute shared by every
+        picker), so callers opt in with ``show_vehicle_year`` in the field's
+        context.
+        """
+        super()._compute_display_name()
+        if not self.env.context.get("show_vehicle_year"):
+            return
+        for vehicle in self:
+            if vehicle.model_year:
+                vehicle.display_name = f"{vehicle.model_year} {vehicle.display_name}"
 
     def _compute_repair_count(self):
         counts = dict(
