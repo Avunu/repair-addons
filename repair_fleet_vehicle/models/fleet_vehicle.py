@@ -6,6 +6,8 @@ from odoo import api, fields, models
 
 class FleetVehicle(models.Model):
     _inherit = "fleet.vehicle"
+    # Base fleet searches name and driver; also match the customer's unit number.
+    _rec_names_search = ["name", "driver_id.name", "unit_number"]
 
     repair_order_ids = fields.One2many(
         "repair.order", "vehicle_id", string="Repair Orders"
@@ -19,20 +21,24 @@ class FleetVehicle(models.Model):
     )
 
     @api.depends_context("show_vehicle_year")
-    @api.depends("model_year")
+    @api.depends("model_year", "unit_number")
     def _compute_display_name(self):
-        """Prefix the model year when a form asks for it via context.
+        """Add the model year and unit number when a form asks for them.
 
         Only the label changes (``name`` is a stored compute shared by every
         picker), so callers opt in with ``show_vehicle_year`` in the field's
-        context.
+        context. Result: ``2016 Freightliner/Cascadia/TRK-1234 (T-104)``.
         """
         super()._compute_display_name()
         if not self.env.context.get("show_vehicle_year"):
             return
         for vehicle in self:
+            label = vehicle.display_name
             if vehicle.model_year:
-                vehicle.display_name = f"{vehicle.model_year} {vehicle.display_name}"
+                label = f"{vehicle.model_year} {label}"
+            if vehicle.unit_number:
+                label = f"{label} ({vehicle.unit_number})"
+            vehicle.display_name = label
 
     def _compute_repair_count(self):
         counts = dict(
