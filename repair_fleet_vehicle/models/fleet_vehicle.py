@@ -6,6 +6,8 @@ from odoo import api, fields, models
 
 class FleetVehicle(models.Model):
     _inherit = "fleet.vehicle"
+    # Base fleet searches name and driver; also match the customer's unit number.
+    _rec_names_search = ["name", "driver_id.name", "unit_number"]
 
     repair_order_ids = fields.One2many(
         "repair.order", "vehicle_id", string="Repair Orders"
