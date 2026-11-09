@@ -136,14 +136,33 @@ class TestRepairFleetVehicle(TransactionCase):
             .search([("vehicle_id", "=", self.vehicle.id)])
         )
 
-    def test_display_name_year_only_when_requested(self):
-        self.vehicle.model_year = "2016"
+    def test_display_name_year_and_unit_only_when_requested(self):
+        self.vehicle.write({"model_year": "2016", "unit_number": "T-104"})
         plain = self.vehicle.display_name
-        self.assertFalse(plain.startswith("2016"))
-        with_year = self.vehicle.with_context(show_vehicle_year=True).display_name
-        self.assertEqual(with_year, f"2016 {plain}")
-        # No year recorded: fall back to the plain label.
-        self.vehicle.model_year = False
+        self.assertNotIn("2016", plain)
+        self.assertNotIn("T-104", plain)
+        labelled = self.vehicle.with_context(show_vehicle_year=True).display_name
+        self.assertEqual(labelled, f"2016 {plain} (T-104)")
+        # Each part is optional.
+        self.vehicle.unit_number = False
+        self.assertEqual(
+            self.vehicle.with_context(show_vehicle_year=True).display_name,
+            f"2016 {plain}",
+        )
+        self.vehicle.write({"model_year": False, "unit_number": "T-104"})
+        self.assertEqual(
+            self.vehicle.with_context(show_vehicle_year=True).display_name,
+            f"{plain} (T-104)",
+        )
+        self.vehicle.unit_number = False
         self.assertEqual(
             self.vehicle.with_context(show_vehicle_year=True).display_name, plain
         )
+
+    def test_name_search_matches_unit_number(self):
+        self.vehicle.unit_number = "T-104"
+        found = self.env["fleet.vehicle"].name_search("T-104")
+        self.assertIn(self.vehicle.id, [vehicle_id for vehicle_id, _name in found])
+        # Existing matches keep working.
+        found = self.env["fleet.vehicle"].name_search("TRK-1234")
+        self.assertIn(self.vehicle.id, [vehicle_id for vehicle_id, _name in found])
