@@ -4,7 +4,7 @@
     "name": "Repair Fleet Vehicle",
     "summary": "Link repair orders to customer vehicles (fleet), with odometer "
     "capture, customer concern, and vehicle info on estimates and invoices.",
-    "version": "18.0.1.1.1",
+    "version": "18.0.1.2.0",
     "category": "Inventory/Repair",
     "author": "Avunu LLC",
     "website": "https://github.com/Avunu/repair-addons",
