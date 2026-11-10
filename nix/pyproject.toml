@@ -17,6 +17,7 @@ dependencies = [
     # >>> odoo-nix: install set (managed from modules.txt) >>>
     "odoo",
     "packaging",
+    "odoo-addon-repair_customer_reference",
     "odoo-addon-repair_fleet_vehicle",
     "odoo-addon-repair_order_template_service",
     "odoo-addon-repair_purchase_order_parts",
@@ -139,6 +140,7 @@ constraint-dependencies = ["setuptools<81"]
     "odoo-addon-project_version" = { path = "../.odoo-nix/modules/project/project_version" }
     "odoo-addon-repair_analytic" = { path = "../.odoo-nix/modules/repair/repair_analytic" }
     "odoo-addon-repair_analytic_timesheet" = { path = "../.odoo-nix/modules/repair/repair_analytic_timesheet" }
+    "odoo-addon-repair_customer_reference" = { path = "../repair_customer_reference", editable = true }
     "odoo-addon-repair_fleet_vehicle" = { path = "../repair_fleet_vehicle", editable = true }
     "odoo-addon-repair_order_group" = { path = "../.odoo-nix/modules/repair/repair_order_group" }
     "odoo-addon-repair_order_group_services" = { path = "../.odoo-nix/modules/repair/repair_order_group_services" }

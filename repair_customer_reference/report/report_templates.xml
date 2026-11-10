@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Avunu LLC (avu.nu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <template id="report_repairorder" inherit_id="repair.report_repairorder">
+        <xpath expr="//p[span[@t-field='o.partner_id']]" position="after">
+            <p t-if="o.client_order_ref" class="m-0">
+                <strong>Customer Reference:</strong>
+                <span t-field="o.client_order_ref">PO-1234</span>
+            </p>
+        </xpath>
+    </template>
+</odoo>

@@ -1701,8 +1701,19 @@ wheels = [
 ]
 
 [[package]]
+name = "odoo-addon-repair-customer-reference"
+version = "18.0.1.0.0"
+source = { editable = "../repair_customer_reference" }
+dependencies = [
+    { name = "odoo" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "odoo", specifier = "==18.0.*" }]
+
+[[package]]
 name = "odoo-addon-repair-fleet-vehicle"
-version = "18.0.1.1.1.4"
+version = "18.0.1.1.1.6"
 source = { editable = "../repair_fleet_vehicle" }
 dependencies = [
     { name = "odoo" },
@@ -2236,6 +2247,7 @@ version = "0"
 source = { virtual = "." }
 dependencies = [
     { name = "odoo" },
+    { name = "odoo-addon-repair-customer-reference" },
     { name = "odoo-addon-repair-fleet-vehicle" },
     { name = "odoo-addon-repair-order-template-service" },
     { name = "odoo-addon-repair-purchase-order-parts" },
@@ -2256,6 +2268,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "odoo", directory = "../.odoo-nix/odoo" },
+    { name = "odoo-addon-repair-customer-reference", editable = "../repair_customer_reference" },
     { name = "odoo-addon-repair-fleet-vehicle", editable = "../repair_fleet_vehicle" },
     { name = "odoo-addon-repair-order-template-service", editable = "../repair_order_template_service" },
     { name = "odoo-addon-repair-purchase-order-parts", editable = "../repair_purchase_order_parts" },

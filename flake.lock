@@ -420,11 +420,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1793341285,
-        "narHash": "sha256-Y1CiZ4SoBUjLQyQM/pY+rS2dXD3CHLPstF0lmOc73D4=",
+        "lastModified": 1793110635,
+        "narHash": "sha256-dhoW6VgFWlaodSY5jrBn+CF2FLmaUvDVgM7+C7T2+NM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1c89083e451e891152365b799595cf7790a43325",
+        "rev": "31ecbaca1bdefa45dffc409f0250bd8039ea0010",
         "type": "github"
       },
       "original": {
@@ -454,11 +454,11 @@
     "oca-project": {
       "flake": false,
       "locked": {
-        "lastModified": 1793371613,
-        "narHash": "sha256-PpEL/JpBGwAbscYXuJWIHRP7Js9CKO+jIqufKCyLbQk=",
+        "lastModified": 1794301372,
+        "narHash": "sha256-uK37rt4pVrDYeeMf0UuYwBK+QcPjiY+89JEIoX21/xQ=",
         "owner": "OCA",
         "repo": "project",
-        "rev": "714ed9e3582b20ca6b3ae1a5f9d02041f4ea9572",
+        "rev": "7c9e3a2fffab1fa09e9317803a892a3bee78f878",
         "type": "github"
       },
       "original": {
@@ -488,11 +488,11 @@
     "ocb": {
       "flake": false,
       "locked": {
-        "lastModified": 1793662244,
-        "narHash": "sha256-35gWizsKIG8KSQwKrWEMLtWpRERB1tnbVbOT7WTpCd0=",
+        "lastModified": 1794267045,
+        "narHash": "sha256-9C/7UQFvFSK+VmPUNCGNKXXbM+Is5i1wudAgFJ0WUpU=",
         "owner": "OCA",
         "repo": "OCB",
-        "rev": "863e15fcbf0c75651d6f3c37bc4431a9cb12ca67",
+        "rev": "c2e88e58c732d4e8279f6f11170f0d46a16169de",
         "type": "github"
       },
       "original": {
@@ -606,11 +606,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1794147220,
-        "narHash": "sha256-YJcbK7ETL+fmNu6K/5No76QkRM/nsM4CdAC+BEeKrw8=",
+        "lastModified": 1794329426,
+        "narHash": "sha256-S6Iu0T1k2Bvi9v+RgCSnU+fpsjpQRvjRk7HD2cqtkYE=",
         "owner": "Avunu",
         "repo": "odoo-nix",
-        "rev": "917f576254afd3108f705a9097940fa51667f304",
+        "rev": "1a9b7a74979425584669cc04d841d0ae90894ddb",
         "type": "github"
       },
       "original": {
@@ -698,11 +698,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793886131,
-        "narHash": "sha256-WYx/W7Kq6UwPvIFmbXzyMPbP0J99AzaxSXJLHeeNlqM=",
+        "lastModified": 1794079530,
+        "narHash": "sha256-T76hmhJb9ioLHxx+pvRRsPCppKr4eay4A5vC+yiQT1E=",
         "owner": "Avunu",
         "repo": "python-devops-nix",
-        "rev": "7887586590d83942dac7db84c655478f633a7005",
+        "rev": "ef790559b046095880b2776ebe6a00f455a455eb",
         "type": "github"
       },
       "original": {

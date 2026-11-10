@@ -22,6 +22,7 @@ allowed_scopes = [
   "docs",
   "main",
   "release",
+  "repair_customer_reference",
   "repair_fleet_vehicle",
   "repair_order_template_service",
   "repair_purchase_order_parts",

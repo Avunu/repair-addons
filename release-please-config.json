@@ -65,6 +65,16 @@
     }
   ],
   "packages": {
+    "repair_customer_reference": {
+      "component": "repair_customer_reference-18.0",
+      "exclude-paths": [
+        "repair_customer_reference/tests",
+        "repair_customer_reference/readme",
+        "repair_customer_reference/i18n",
+        "repair_customer_reference/i18n_extra",
+        "repair_customer_reference/static/description"
+      ]
+    },
     "repair_fleet_vehicle": {
       "component": "repair_fleet_vehicle-18.0",
       "exclude-paths": [
