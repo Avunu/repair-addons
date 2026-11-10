@@ -67,7 +67,9 @@ class TestRepairCustomerReference(TransactionCase):
         self.assertEqual(order.client_order_ref, "PO-9")
 
     def test_views_and_report(self):
-        form = etree.fromstring(self.env["repair.order"].get_view(view_type="form")["arch"])
+        form = etree.fromstring(
+            self.env["repair.order"].get_view(view_type="form")["arch"]
+        )
         self.assertTrue(
             form.xpath(
                 "//field[@name='tag_ids']/following-sibling::*[1]"
