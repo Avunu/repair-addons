@@ -1,4 +1,5 @@
 {
+  "repair_customer_reference": "1.0.0",
   "repair_fleet_vehicle": "1.1.1",
   "repair_order_template_service": "1.0.0",
   "repair_purchase_order_parts": "2.0.0",
