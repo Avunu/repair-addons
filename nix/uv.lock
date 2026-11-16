@@ -1713,7 +1713,7 @@ requires-dist = [{ name = "odoo", specifier = "==18.0.*" }]
 
 [[package]]
 name = "odoo-addon-repair-fleet-vehicle"
-version = "18.0.1.1.1.6"
+version = "18.0.1.2.0"
 source = { editable = "../repair_fleet_vehicle" }
 dependencies = [
     { name = "odoo" },
