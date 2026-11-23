@@ -4,7 +4,7 @@
     "name": "Repair Stages",
     "summary": "Configurable kanban stages for repair orders, each tied to a "
     "repair status, with drag-and-drop that runs the real status change",
-    "version": "18.0.1.1.0",
+    "version": "18.0.1.1.1",
     "category": "Inventory/Repair",
     "author": "Avunu LLC",
     "website": "https://github.com/Avunu/repair-addons",
