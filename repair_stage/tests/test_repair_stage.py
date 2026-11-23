@@ -138,6 +138,25 @@ class TestRepairStage(TransactionCase):
         self.assertEqual(repair.state, "under_repair")
         self.assertEqual(repair.stage_id, self.stage_under_repair)
 
+    def test_steps_passed_through_skip_their_dialogs(self):
+        repair = self._repair()
+        seen = []
+        original = self.RepairOrder.action_validate
+
+        def validate(rec):
+            seen.append(
+                (
+                    rec.env.context.get("skip_service_confirm_wizard"),
+                    rec.env.context.get("skip_service_finalize_wizard"),
+                )
+            )
+            return original(rec)
+
+        with patch.object(self.RepairOrder, "action_validate", validate):
+            repair.action_set_stage(self.stage_under_repair.id)
+        self.assertEqual(seen, [(True, True)])
+        self.assertEqual(repair.state, "under_repair")
+
     # -- moving back ------------------------------------------------------
 
     def _repair_under_repair(self):

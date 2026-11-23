@@ -168,12 +168,13 @@ class RepairOrder(models.Model):
         """Bring the order to ``stage``'s status, from any status.
 
         Forward moves run each step's button in turn (so New → Under Repair
-        confirms, then starts). Cancelling runs Cancel; leaving Cancelled
-        runs Reset to Draft first. A finished order has no button to reopen
-        it, so its status is just set back (stock moves are left as they
-        are). A step that opens a dialog stops the chain: the dialog is
-        returned, and the board calls this again once the dialog is
-        completed to carry on towards the stage.
+        confirms, then starts). Only the last step may open its dialog
+        (Confirm, Finalize): the steps passed through on the way skip theirs,
+        so New → Repaired goes straight to Finalize. Cancelling runs Cancel;
+        leaving Cancelled runs Reset to Draft first. A finished order has no
+        button to reopen it, so its status is just set back (stock moves are
+        left as they are). If the last step opens a dialog, it is returned,
+        and the board calls this again once it is completed.
         """
         self.ensure_one()
         target_ctx = {TARGET_STAGE_KEY: stage.id, TARGET_REPAIR_KEY: self.id}
@@ -200,7 +201,17 @@ class RepairOrder(models.Model):
         elif stage.state == "cancel":
             self.action_repair_cancel()
         else:
-            return getattr(self, STAGE_TRANSITIONS[(state, self._next_state())])()
+            next_state = self._next_state()
+            repair = self
+            if next_state != stage.state:
+                # Only the step that reaches the dropped stage may open its
+                # dialog: passing through New → Confirmed on the way to
+                # Repaired shouldn't ask to confirm the repair first.
+                repair = self.with_context(
+                    skip_service_confirm_wizard=True,
+                    skip_service_finalize_wizard=True,
+                )
+            return getattr(repair, STAGE_TRANSITIONS[(state, next_state)])()
         return True
 
     def _next_state(self):
