@@ -454,11 +454,11 @@
     "oca-project": {
       "flake": false,
       "locked": {
-        "lastModified": 1794301372,
-        "narHash": "sha256-uK37rt4pVrDYeeMf0UuYwBK+QcPjiY+89JEIoX21/xQ=",
+        "lastModified": 1794401206,
+        "narHash": "sha256-ZvsIQzXkamOwH+1mieMEMsCWPKjwK9phPMTnpwJbOqQ=",
         "owner": "OCA",
         "repo": "project",
-        "rev": "7c9e3a2fffab1fa09e9317803a892a3bee78f878",
+        "rev": "36ab69b8f08b2ada033e30f19edc00fba8c2e617",
         "type": "github"
       },
       "original": {
