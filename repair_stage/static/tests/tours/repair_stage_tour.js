@@ -47,6 +47,14 @@ registry.category("web_tour.tours").add("repair_stage_board", {
             trigger: `body:not(:has(.modal)) ${column("New")} ${card("Stage Tour Beta")}`,
         },
         {
+            // Closing the dialog ends the move; the board then re-reads the
+            // card and reloads. Let that settle so the next drop isn't lost
+            // to the reload.
+            content: "Wait for the board to reload",
+            trigger: `${column("New")} ${card("Stage Tour Beta")}`,
+            run: () => new Promise((resolve) => setTimeout(resolve, 1000)),
+        },
+        {
             content: "A step that needs a dialog opens it",
             trigger: `${column("New")} ${card("Stage Tour Beta")}`,
             run: `drag_and_drop (${column("Waiting for Customer")})`,
