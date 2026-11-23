@@ -5,8 +5,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 # Moving an order into a stage of a later status is the same as pressing the
-# button for that step. Only the forward steps a button exists for are
-# allowed; skipping a step or cancelling has to be done with the buttons.
+# button for that step, one step at a time until it gets there.
 STAGE_TRANSITIONS = {
     ("draft", "confirmed"): "action_validate",
     ("confirmed", "under_repair"): "action_repair_start",
@@ -166,29 +165,44 @@ class RepairOrder(models.Model):
         return self._run_stage_transition(stage)
 
     def _run_stage_transition(self, stage):
-        self.ensure_one()
-        method = STAGE_TRANSITIONS.get((self.state, stage.state))
-        if not method:
-            raise UserError(self._blocked_move_message(stage))
-        target_ctx = {TARGET_STAGE_KEY: stage.id, TARGET_REPAIR_KEY: self.id}
-        result = getattr(self.with_context(**target_ctx), method)()
-        if isinstance(result, dict) and isinstance(result.get("context"), dict):
-            result = dict(result, context=dict(result["context"], **target_ctx))
-        return result
+        """Bring the order to ``stage``'s status, from any status.
 
-    def _blocked_move_message(self, stage):
-        if self.state not in OPEN_STATES:
-            return _(
-                "%(order)s is already finished, so it can't be moved to “%(stage)s”.",
-                order=self.name,
-                stage=stage.name,
-            )
-        labels = dict(self._fields["state"]._description_selection(self.env))
-        return _(
-            "%(order)s can't move from “%(from)s” to “%(to)s” here. Orders move "
-            "one step forward at a time (New → Confirmed → Under Repair → "
-            "Repaired) or back to any earlier stage; use the buttons on the "
-            "repair order for anything else.",
-            order=self.name,
-            **{"from": labels[self.state], "to": labels[stage.state]},
-        )
+        Forward moves run each step's button in turn (so New → Under Repair
+        confirms, then starts). Cancelling runs Cancel; leaving Cancelled
+        runs Reset to Draft first. A finished order has no button to reopen
+        it, so its status is just set back (stock moves are left as they
+        are). A step that opens a dialog stops the chain: the dialog is
+        returned, and the order continues from there once it is dropped
+        again.
+        """
+        self.ensure_one()
+        target_ctx = {TARGET_STAGE_KEY: stage.id, TARGET_REPAIR_KEY: self.id}
+        repair = self.with_context(**target_ctx)
+        for _i in range(len(STATE_SEQUENCE) + 2):
+            if repair.state == stage.state:
+                return True
+            result = repair._next_stage_step(stage)
+            if isinstance(result, dict):
+                if isinstance(result.get("context"), dict):
+                    result = dict(result, context=dict(result["context"], **target_ctx))
+                return result
+        return True
+
+    def _next_stage_step(self, stage):
+        """Run the one step from this order's status towards ``stage``."""
+        self.ensure_one()
+        state = self.state
+        if state == "done":
+            # No button reopens a finished order: only its status changes.
+            self.write({"state": stage.state})
+        elif state == "cancel":
+            self.action_repair_cancel_draft()
+        elif stage.state == "cancel":
+            self.action_repair_cancel()
+        else:
+            return getattr(self, STAGE_TRANSITIONS[(state, self._next_state())])()
+        return True
+
+    def _next_state(self):
+        self.ensure_one()
+        return STATE_SEQUENCE[STATE_SEQUENCE.index(self.state) + 1]
