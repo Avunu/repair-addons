@@ -34,7 +34,8 @@ registry.category("web_tour.tours").add("repair_stage_board", {
             trigger: `${column("Waiting for Parts")} ${card("Stage Tour Alpha")}`,
         },
         {
-            content: "Skipping a step: runs the steps in turn, the first opens a dialog",
+            content:
+                "Skipping a step: runs the steps in turn, the first opens a dialog",
             trigger: `${column("New")} ${card("Stage Tour Beta")}`,
             run: `drag_and_drop (${column("Under Repair")})`,
         },
