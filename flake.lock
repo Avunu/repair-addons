@@ -420,11 +420,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1794386569,
-        "narHash": "sha256-x9sADJvoVG0L6RejZB+/BB4YiGZFBZrfTlhF4uBq1tQ=",
+        "lastModified": 1794537146,
+        "narHash": "sha256-Wpz/7x/YWnDIBu7yj6ixe8j6fIMsidd9Y+o1PqPF3iM=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d4f25a3e562008648d45bcf2d70bcc7422cad84e",
+        "rev": "d5cc6833999746cffdfe0598f7bc801a57b887a9",
         "type": "github"
       },
       "original": {
@@ -454,11 +454,11 @@
     "oca-project": {
       "flake": false,
       "locked": {
-        "lastModified": 1794301372,
-        "narHash": "sha256-uK37rt4pVrDYeeMf0UuYwBK+QcPjiY+89JEIoX21/xQ=",
+        "lastModified": 1794401206,
+        "narHash": "sha256-ZvsIQzXkamOwH+1mieMEMsCWPKjwK9phPMTnpwJbOqQ=",
         "owner": "OCA",
         "repo": "project",
-        "rev": "7c9e3a2fffab1fa09e9317803a892a3bee78f878",
+        "rev": "36ab69b8f08b2ada033e30f19edc00fba8c2e617",
         "type": "github"
       },
       "original": {
