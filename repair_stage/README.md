@@ -11,14 +11,15 @@ before.
   Cancelled (folded).
 - The repairs board is grouped by stage. Managers (Inventory Administrator) can drag
   columns to reorder them.
-- Dropping a card on a column of a later status runs that step, exactly as the button
-  would: New → Confirmed runs Confirm (opening its dialog when there is one), Confirmed
-  → Under Repair runs Start Repair, Under Repair → Repaired runs End Repair. Skipping a
-  step or cancelling is refused; use the buttons on the order.
-- An open order can be moved back to any stage of an earlier status, e.g. Under Repair →
-  Waiting for Parts when a part turns out to be missing. That only changes its stage: it
-  stays Under Repair, and its next step (End Repair) works as usual. Repaired and
-  cancelled orders can't be moved back.
+- Cards can be dropped on any column, in any direction. Moving to a later status runs
+  each step in turn, exactly as the buttons would (New → Under Repair confirms, then
+  starts). Steps that open a dialog (Confirm, Finalize) open it on the board, and once
+  it's completed the card carries on to the dropped column; dismissing it stops the move
+  there. Moving to Cancelled runs Cancel; leaving Cancelled runs Reset to Draft first.
+- An open order moved back to a stage of an earlier status, e.g. Under Repair → Waiting
+  for Parts, only changes its stage: its status stays and its next step works as usual.
+- A Repaired order has no button to reopen it, so moving it elsewhere just sets its
+  status back; stock moves already done are left as they are.
 - When a button changes the status, the order moves to the first stage (left-most
   column) of the new status.
 - Every status must keep at least one active stage.

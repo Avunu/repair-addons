@@ -132,11 +132,11 @@ class TestRepairStage(TransactionCase):
         ):
             repair.write({"stage_id": self.stage_confirmed.id})
 
-    def test_skipping_a_step_is_blocked(self):
+    def test_skipping_a_step_runs_each_step(self):
         repair = self._repair()
-        with self.assertRaisesRegex(UserError, "one step forward"):
-            repair.action_set_stage(self.stage_under_repair.id)
-        self.assertEqual(repair.state, "draft")
+        self.assertIs(repair.action_set_stage(self.stage_under_repair.id), True)
+        self.assertEqual(repair.state, "under_repair")
+        self.assertEqual(repair.stage_id, self.stage_under_repair)
 
     # -- moving back ------------------------------------------------------
 
@@ -190,18 +190,21 @@ class TestRepairStage(TransactionCase):
         self.assertEqual(repair.state, "done")
         self.assertEqual(repair.stage_id, self.stage_repaired)
 
-    def test_finished_order_cannot_move_back(self):
+    def test_finished_order_can_move_back(self):
         repair = self._repair_under_repair()
         repair.action_repair_done()
-        with self.assertRaisesRegex(UserError, "already finished"):
-            repair.action_set_stage(self.stage_under_repair.id)
-        self.assertEqual(repair.stage_id, self.stage_repaired)
-
-    def test_cannot_move_into_cancelled(self):
-        repair = self._repair_under_repair()
-        with self.assertRaisesRegex(UserError, "one step forward"):
-            repair.action_set_stage(self.env.ref("repair_stage.stage_cancelled").id)
+        self.assertIs(repair.action_set_stage(self.stage_under_repair.id), True)
         self.assertEqual(repair.state, "under_repair")
+        self.assertEqual(repair.stage_id, self.stage_under_repair)
+
+    def test_can_move_into_and_out_of_cancelled(self):
+        repair = self._repair_under_repair()
+        cancelled = self.env.ref("repair_stage.stage_cancelled")
+        self.assertIs(repair.action_set_stage(cancelled.id), True)
+        self.assertEqual(repair.state, "cancel")
+        self.assertIs(repair.action_set_stage(self.stage_new.id), True)
+        self.assertEqual(repair.state, "draft")
+        self.assertEqual(repair.stage_id, self.stage_new)
 
     def test_stage_must_match_status(self):
         repair = self._repair()
