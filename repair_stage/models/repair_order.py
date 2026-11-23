@@ -172,8 +172,8 @@ class RepairOrder(models.Model):
         runs Reset to Draft first. A finished order has no button to reopen
         it, so its status is just set back (stock moves are left as they
         are). A step that opens a dialog stops the chain: the dialog is
-        returned, and the order continues from there once it is dropped
-        again.
+        returned, and the board calls this again once the dialog is
+        completed to carry on towards the stage.
         """
         self.ensure_one()
         target_ctx = {TARGET_STAGE_KEY: stage.id, TARGET_REPAIR_KEY: self.id}

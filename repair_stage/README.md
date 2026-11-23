@@ -13,8 +13,9 @@ before.
   columns to reorder them.
 - Cards can be dropped on any column, in any direction. Moving to a later status runs
   each step in turn, exactly as the buttons would (New → Under Repair confirms, then
-  starts); if a step opens a dialog, the order stops there and the card can be dropped
-  again to continue. Moving to Cancelled runs Cancel; leaving Cancelled runs Reset to
+  starts). Steps that open a dialog (Confirm, Finalize) open it on the board, and once
+  it's completed the card carries on to the dropped column; dismissing it stops the move
+  there. Moving to Cancelled runs Cancel; leaving Cancelled runs Reset to
   Draft first.
 - An open order moved back to a stage of an earlier status, e.g. Under Repair → Waiting
   for Parts, only changes its stage: its status stays and its next step works as usual.
