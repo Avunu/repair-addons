@@ -78,8 +78,12 @@ registry.category("web_tour.tours").add("repair_stage_form", {
             run: "click",
         },
         {
+            content: "The form opens with the stage bar",
+            trigger: ".o_form_view .o_statusbar_status button:contains('Under Repair')",
+        },
+        {
             content: "Edit a field without saving",
-            trigger: ".o_form_view .o_field_widget[name='under_warranty'] input",
+            trigger: ".o_form_view [name='under_warranty'] input",
             run: "click",
         },
         {
