@@ -43,7 +43,10 @@ class TestRepairStageBoard(HttpCase):
         new_test_user(
             self.env,
             login="stage_form_user",
-            groups="base.group_user,stock.group_stock_user",
+            # The form also reads the order's timesheet lines, which other
+            # installed addons put on it; the board doesn't.
+            groups="base.group_user,stock.group_stock_user,"
+            "analytic.group_analytic_accounting",
         )
         partner = self.env["res.partner"].create({"name": "Stage Form Gamma"})
         gamma = self.env["repair.order"].create({"partner_id": partner.id})
