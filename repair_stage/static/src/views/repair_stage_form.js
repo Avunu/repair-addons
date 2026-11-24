@@ -21,10 +21,15 @@ import {registry} from "@web/core/registry";
  * else. If the dialog is dismissed, the order keeps its saved changes and
  * its previous stage.
  */
+// A many2one value is `{id, display_name}` once loaded, but a change made
+// through `record.update` (the stage bar) may still be an `[id, name]` pair.
+const idOf = (value) => (Array.isArray(value) ? value[0] : value?.id);
+
 export class RepairStageFormRecord extends Record {
     async _save(options = {}) {
         const target = this.resId && this._changes.stage_id;
-        if (!target || !target.id || target.id === this._values.stage_id?.id) {
+        const targetId = idOf(target);
+        if (!targetId || targetId === idOf(this._values.stage_id)) {
             return super._save(options);
         }
         const {nextId, ...saveOptions} = options;
@@ -50,7 +55,7 @@ export class RepairStageFormRecord extends Record {
             await moveToStage(this.model, {
                 resModel: this.resModel,
                 resId: this.resId,
-                stageId: target.id,
+                stageId: targetId,
                 context: this.context,
             });
         } finally {
