@@ -18,7 +18,9 @@
     ],
     "assets": {
         "web.assets_backend": [
+            "repair_stage/static/src/views/repair_stage_move.js",
             "repair_stage/static/src/views/repair_stage_kanban.js",
+            "repair_stage/static/src/views/repair_stage_form.js",
         ],
         "web.assets_tests": [
             "repair_stage/static/tests/tours/*.js",

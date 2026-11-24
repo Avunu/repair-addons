@@ -68,3 +68,33 @@ registry.category("web_tour.tours").add("repair_stage_board", {
         },
     ],
 });
+
+registry.category("web_tour.tours").add("repair_stage_form", {
+    url: "/odoo/action-repair.action_repair_order_tree",
+    steps: () => [
+        {
+            content: "Open the repair order",
+            trigger: ".o_data_row:contains('Stage Form Gamma') .o_data_cell",
+            run: "click",
+        },
+        {
+            content: "Edit a field without saving",
+            trigger: ".o_form_view .o_field_widget[name='under_warranty'] input",
+            run: "click",
+        },
+        {
+            content: "Pick a stage of a later status: save asks for the dialog",
+            trigger: ".o_statusbar_status button:contains('Under Repair')",
+            run: "click",
+        },
+        {
+            trigger: ".modal:has(.o_form_view) .modal-header .btn-close",
+            run: "click",
+        },
+        {
+            content: "The edit was saved, the stage is unchanged",
+            trigger:
+                ".o_form_view:not(:has(.modal)) .o_statusbar_status button.o_arrow_button_current:contains('New')",
+        },
+    ],
+});

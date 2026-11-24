@@ -38,3 +38,24 @@ class TestRepairStageBoard(HttpCase):
             alpha.stage_id, self.env.ref("repair_stage.stage_waiting_parts")
         )
         self.assertEqual(beta.state, "draft")
+
+    def test_form_save_asks_for_dialog(self):
+        new_test_user(
+            self.env,
+            login="stage_form_user",
+            groups="base.group_user,stock.group_stock_user",
+        )
+        partner = self.env["res.partner"].create({"name": "Stage Form Gamma"})
+        gamma = self.env["repair.order"].create({"partner_id": partner.id})
+        dialog = {
+            "type": "ir.actions.act_window",
+            "res_model": "repair.order.stage",
+            "res_id": self.env.ref("repair_stage.stage_confirmed").id,
+            "views": [[False, "form"]],
+            "target": "new",
+        }
+        Repair = type(gamma)
+        with patch.object(Repair, "action_validate", lambda self: dict(dialog)):
+            self.start_tour("/odoo", "repair_stage_form", login="stage_form_user")
+        self.assertEqual(gamma.state, "draft")
+        self.assertTrue(gamma.under_warranty)
