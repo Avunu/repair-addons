@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/Avunu/repair-addons/compare/repair_stage-18.0.1.1.1...repair_stage-18.0.1.1.2) (2026-11-25)
+
+
+### Bug Fixes
+
+* **repair_stage:** ask for the confirmation dialog when saving the form ([#26](https://github.com/Avunu/repair-addons/issues/26)) ([b1986f9](https://github.com/Avunu/repair-addons/commit/b1986f9194e899c6e945bdd114ba91f6b294404f))
+
 ## [1.1.1](https://github.com/Avunu/repair-addons/compare/repair_stage-18.0.1.1.0...repair_stage-18.0.1.1.1) (2026-11-23)
 
 
