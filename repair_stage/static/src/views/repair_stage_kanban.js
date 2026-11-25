@@ -3,6 +3,7 @@
 
 import {RelationalModel} from "@web/model/relational_model/relational_model";
 import {kanbanView} from "@web/views/kanban/kanban_view";
+import {moveToStage} from "./repair_stage_move";
 import {registry} from "@web/core/registry";
 
 /**
@@ -25,41 +26,15 @@ export class RepairStageKanbanDynamicGroupList extends RelationalModel.DynamicGr
         const sourceGroup = this.groups.find((g) => g.id === dataGroupId);
         const targetGroup = this.groups.find((g) => g.id === targetGroupId);
         const record = sourceGroup.list.records.find((r) => r.id === dataRecordId);
-        const reload = () => this.model.load();
-        const {orm} = this.model;
-        const read = async () =>
-            (await orm.read(this.resModel, [record.resId], ["state", "stage_id"]))[0];
         try {
-            // A move across several statuses runs one step at a time, and a
-            // step may open a dialog (Confirm, Finalize). Once a dialog is
-            // completed, keep going until the card reaches the dropped column.
-            // Stop when a round changed nothing (dialog dismissed).
-            for (let round = 0; round < 6; round++) {
-                const before = await read();
-                await new Promise((resolve, reject) => {
-                    // OnClose also runs straight away when the step needs no dialog.
-                    this.model.action
-                        .doActionButton({
-                            type: "object",
-                            name: "action_set_stage",
-                            resModel: this.resModel,
-                            resId: record.resId,
-                            args: JSON.stringify([targetGroup.value]),
-                            context: this.context,
-                            onClose: resolve,
-                        })
-                        .catch(reject);
-                });
-                const after = await read();
-                if (
-                    after.stage_id[0] === targetGroup.value ||
-                    after.state === before.state
-                ) {
-                    break;
-                }
-            }
+            await moveToStage(this.model, {
+                resModel: this.resModel,
+                resId: record.resId,
+                stageId: targetGroup.value,
+                context: this.context,
+            });
         } finally {
-            await reload();
+            await this.model.load();
         }
     }
 }
